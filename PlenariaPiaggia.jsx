@@ -443,18 +443,11 @@ const SLIDES = [
     { t: "L'AI entra in tre tempi", d: "Prima come strumento → poi come oggetto di studio → solo dopo come disciplina. Un ordine anomalo rispetto a tutte le rivoluzioni precedenti" },
   ]},
 
-  { type: "ideas", icon: "🚀", area: "AI e Scuola — Le opportunità (per noi)", color: C.teal, ideas: [
+  { type: "ideas", icon: "🚀", area: "AI e Scuola — Le opportunità", color: C.teal, ideas: [
     { t: "Formazione docenti: gap enorme", d: "Nessuno standard nazionale, qualità dipende dalle risorse locali. Lo spazio per chi forma i docenti è immenso — e urgente" },
     { t: "Tre livelli da tenere distinti", d: "AI in education (usare strumenti) ≠ AI literacy (capire come funziona) ≠ AI education (costruire sistemi). Confonderli è il rischio principale" },
     { t: "L'apprendimento si disintermedia", d: "Skill AI crescono più velocemente fuori dalla scuola (corsi, certificati, lavoro). La scuola può scegliere di guidare o seguire" },
     { t: "Equità come priorità progettuale", d: "Gap persistente per genere, etnia, reddito. Chi forma i docenti può amplificare o ridurre queste disuguaglianze sistemiche" },
-  ]},
-
-  { type: "ideas", icon: "🌱", area: "Come continuare", color: C.teal, ideas: [
-    { t: "Community di pratica", d: "Spazio condiviso: prompt riusciti, errori istruttivi, scoperte da condividere con i colleghi" },
-    { t: "Supervisione tra pari", d: "Sessioni brevi mensili: «questo mi ha funzionato / non funzionato». Imparare dall'errore altrui." },
-    { t: "IA nella programmazione", d: "Integrare il Documento di Contesto nella progettazione annuale e nei consigli di classe" },
-    { t: "Studenti protagonisti", d: "Insegnare l'uso critico dell'IA in classe — non il divieto, ma il metodo" },
   ]},
 
   { type: "bigtext", icon: "✨",
@@ -564,7 +557,6 @@ function IdeasSlide({ slide }) {
         </div>
       ))}
     </div>
-    <p style={{fontSize:12,color:C.navy,opacity:.3,marginTop:14,fontFamily:"'DM Sans',sans-serif",textAlign:"center",animation:"fadeUp .4s ease .6s both"}}>Cosa aggiungereste? ✋</p>
   </div>;
 }
 
