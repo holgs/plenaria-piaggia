@@ -263,6 +263,15 @@ const SLIDES = [
   // ── APERTURA ──────────────────────────────────────────────
   { type: "cover" },
 
+  { type: "content", icon: "🗓️", title: "Agenda · 2 ore", bullets: [
+    "🎯  Apertura — Percorso e bilancio personale (20 min)",
+    "🔍  La vostra IA — Strumenti, pratiche e sorprese (35 min)",
+    "⚖️  Le resistenze — Difficoltà e discussione aperta (25 min)",
+    "🚀  Prossimi passi — Dove andiamo da qui (20 min)",
+    "🌍  Lo scenario globale — AI Index 2026 + scuola (15 min)",
+    "✨  Chiusura (5 min)",
+  ]},
+
   { type: "section", icon: "🗺️", title: "Il percorso",
     subtitle: "Tre sessioni per costruire un sistema" },
 
@@ -401,13 +410,6 @@ const SLIDES = [
       "Valutazione critica degli output",
     ]},
 
-  { type: "ideas", icon: "🌱", area: "Come continuare", color: C.teal, ideas: [
-    { t: "Community di pratica", d: "Spazio condiviso: prompt riusciti, errori istruttivi, scoperte da condividere con i colleghi" },
-    { t: "Supervisione tra pari", d: "Sessioni brevi mensili: «questo mi ha funzionato / non funzionato». Imparare dall'errore altrui." },
-    { t: "IA nella programmazione", d: "Integrare il Documento di Contesto nella progettazione annuale e nei consigli di classe" },
-    { t: "Studenti protagonisti", d: "Insegnare l'uso critico dell'IA in classe — non il divieto, ma il metodo" },
-  ]},
-
   // ── SCENARIO GLOBALE ─────────────────────────────────────
   { type: "section", icon: "🌍", title: "Lo scenario globale",
     subtitle: "Dove siamo arrivati e dove sta andando l'IA" },
@@ -448,6 +450,13 @@ const SLIDES = [
     { t: "Equità come priorità progettuale", d: "Gap persistente per genere, etnia, reddito. Chi forma i docenti può amplificare o ridurre queste disuguaglianze sistemiche" },
   ]},
 
+  { type: "ideas", icon: "🌱", area: "Come continuare", color: C.teal, ideas: [
+    { t: "Community di pratica", d: "Spazio condiviso: prompt riusciti, errori istruttivi, scoperte da condividere con i colleghi" },
+    { t: "Supervisione tra pari", d: "Sessioni brevi mensili: «questo mi ha funzionato / non funzionato». Imparare dall'errore altrui." },
+    { t: "IA nella programmazione", d: "Integrare il Documento di Contesto nella progettazione annuale e nei consigli di classe" },
+    { t: "Studenti protagonisti", d: "Insegnare l'uso critico dell'IA in classe — non il divieto, ma il metodo" },
+  ]},
+
   { type: "bigtext", icon: "✨",
     text: "Non serve essere esperti.\nServe essere curiosi.",
     subtitle: "E voi lo siete già dimostrato." },
@@ -464,7 +473,8 @@ function CoverSlide() {
     <h1 style={{fontSize:50,fontWeight:900,color:C.navy,fontFamily:"'Playfair Display',Georgia,serif",lineHeight:1.1,maxWidth:740,margin:"8px 0",letterSpacing:"-.02em",animation:"fadeUp .6s ease .2s both"}}>Plenaria di Restituzione<br/>Corso IA Avanzato</h1>
     <div style={{width:80,height:4,borderRadius:2,background:C.orange,margin:"8px 0",animation:"fadeUp .6s ease .3s both"}}/>
     <p style={{fontSize:19,color:C.navy,opacity:.5,fontFamily:"'DM Sans',sans-serif",animation:"fadeUp .6s ease .4s both"}}>Condivisione · Bilancio · Prossimi passi · 2 ore</p>
-    <div style={{marginTop:24,animation:"fadeUp .6s ease .5s both"}}>
+    <p style={{fontSize:16,fontWeight:700,color:C.navy,opacity:.7,fontFamily:"'DM Sans',sans-serif",animation:"fadeUp .6s ease .45s both"}}>prof. Holger Ferrero</p>
+    <div style={{marginTop:16,animation:"fadeUp .6s ease .5s both"}}>
       <QRCode url={COVER_FORM_URL} size={155} />
       <p style={{fontSize:12,color:C.navy,opacity:.35,marginTop:8,fontFamily:"'DM Sans',sans-serif"}}>Scansiona per partecipare ai sondaggi</p>
     </div>
@@ -559,21 +569,51 @@ function IdeasSlide({ slide }) {
 }
 
 function VideosSlide({ slide }) {
+  const [activeIdx, setActiveIdx] = useState(null);
+  const embedIds = ["Fw_dSNxhhY4", "mUmlv814aJo"];
+  const accentColors = [C.navy, C.orange];
+
+  if (activeIdx !== null) {
+    const v = slide.videos[activeIdx];
+    return <div style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",height:"100%",padding:"0 32px",textAlign:"center"}}>
+      <div style={{display:"flex",alignItems:"center",gap:16,marginBottom:14}}>
+        <span style={{fontSize:22,fontWeight:700,color:accentColors[activeIdx],fontFamily:"'DM Sans',sans-serif",letterSpacing:".1em",textTransform:"uppercase"}}>{v.year} — {v.label}</span>
+        <button onClick={(e)=>{e.stopPropagation();setActiveIdx(null);}} style={{background:`${C.navy}15`,border:"none",borderRadius:20,padding:"4px 14px",fontSize:13,fontWeight:700,color:C.navy,cursor:"pointer",fontFamily:"'DM Sans',sans-serif"}}>✕ chiudi</button>
+      </div>
+      <iframe
+        src={`https://www.youtube.com/embed/${embedIds[activeIdx]}?autoplay=1`}
+        allow="autoplay; encrypted-media; fullscreen"
+        allowFullScreen
+        style={{width:"min(860px,90%)",height:"min(480px,55vh)",borderRadius:18,border:`2px solid ${accentColors[activeIdx]}40`,boxShadow:"0 12px 48px rgba(0,0,0,0.18)"}}
+      />
+      <div style={{display:"flex",gap:16,marginTop:16}}>
+        {slide.videos.map((_, i) => (
+          <button key={i} onClick={(e)=>{e.stopPropagation();setActiveIdx(i);}} style={{padding:"6px 20px",borderRadius:20,border:`2px solid ${accentColors[i]}`,background:i===activeIdx?accentColors[i]:"transparent",color:i===activeIdx?"white":accentColors[i],fontWeight:700,fontSize:13,cursor:"pointer",fontFamily:"'DM Sans',sans-serif",transition:"all .2s"}}>
+            ▶ {slide.videos[i].year}
+          </button>
+        ))}
+      </div>
+    </div>;
+  }
+
   return <div style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",height:"100%",padding:"0 44px",textAlign:"center"}}>
     <div style={{fontSize:44,marginBottom:8,animation:"fadeUp .4s ease both"}}>{slide.icon}</div>
     <h2 style={{fontSize:38,fontWeight:900,color:C.navy,fontFamily:"'Playfair Display',Georgia,serif",lineHeight:1.15,marginBottom:6,letterSpacing:"-.02em",animation:"fadeUp .5s ease .1s both"}}>{slide.title}</h2>
-    <p style={{fontSize:17,color:C.navy,opacity:.5,fontFamily:"'DM Sans',sans-serif",marginBottom:28,animation:"fadeUp .4s ease .2s both"}}>{slide.subtitle}</p>
-    <div style={{display:"flex",gap:32,justifyContent:"center"}}>
+    <p style={{fontSize:17,color:C.navy,opacity:.5,fontFamily:"'DM Sans',sans-serif",marginBottom:36,animation:"fadeUp .4s ease .2s both"}}>{slide.subtitle}</p>
+    <div style={{display:"flex",gap:28,justifyContent:"center"}}>
       {slide.videos.map((v, i) => (
-        <div key={i} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:14,padding:"24px 28px",background:i===0?`${C.navy}08`:`${C.orange}10`,borderRadius:20,border:`2px solid ${i===0?C.navy+"18":C.orange+"40"}`,animation:`fadeUp .5s ease ${.2+i*.15}s both`}}>
-          <div style={{fontFamily:"'DM Sans',sans-serif",fontSize:13,fontWeight:700,letterSpacing:".12em",textTransform:"uppercase",color:i===0?C.navy:C.orange}}>{v.year}</div>
-          <QRCode url={v.url} size={170} />
-          <p style={{fontSize:15,fontWeight:600,color:C.navy,fontFamily:"'DM Sans',sans-serif",margin:0,maxWidth:200}}>{v.label}</p>
-          <p style={{fontSize:11,color:C.navy,opacity:.35,fontFamily:"'DM Sans',sans-serif",margin:0,wordBreak:"break-all",maxWidth:200}}>{v.url.replace("https://","")}</p>
-        </div>
+        <button key={i} onClick={(e)=>{e.stopPropagation();setActiveIdx(i);}}
+          style={{display:"flex",flexDirection:"column",alignItems:"center",gap:12,padding:"28px 40px",background:i===0?`${C.navy}08`:`${C.orange}10`,borderRadius:22,border:`2px solid ${accentColors[i]}40`,cursor:"pointer",animation:`fadeUp .5s ease ${.2+i*.15}s both`,transition:"transform .2s,box-shadow .2s"}}
+          onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow=`0 12px 36px ${accentColors[i]}30`;}}
+          onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="none";}}>
+          <div style={{fontFamily:"'DM Sans',sans-serif",fontSize:13,fontWeight:700,letterSpacing:".12em",textTransform:"uppercase",color:accentColors[i]}}>{v.year}</div>
+          <div style={{width:90,height:90,borderRadius:"50%",background:accentColors[i],display:"flex",alignItems:"center",justifyContent:"center",fontSize:36,color:"white",boxShadow:`0 6px 24px ${accentColors[i]}50`}}>▶</div>
+          <p style={{fontSize:16,fontWeight:700,color:C.navy,fontFamily:"'DM Sans',sans-serif",margin:0,maxWidth:200}}>{v.label}</p>
+          <p style={{fontSize:12,color:accentColors[i],fontWeight:600,fontFamily:"'DM Sans',sans-serif",margin:0}}>Clicca per guardare</p>
+        </button>
       ))}
     </div>
-    <p style={{fontSize:13,color:C.navy,opacity:.3,marginTop:20,fontFamily:"'DM Sans',sans-serif",animation:"fadeUp .4s ease .6s both"}}>Scansiona o apri l'URL · confrontate la differenza in un anno</p>
+    <p style={{fontSize:13,color:C.navy,opacity:.3,marginTop:24,fontFamily:"'DM Sans',sans-serif",animation:"fadeUp .4s ease .6s both"}}>Confrontate la differenza in un anno</p>
   </div>;
 }
 
@@ -584,6 +624,7 @@ function ClosingSlide() {
     <p style={{fontSize:22,color:C.navy,opacity:.5,fontFamily:"'DM Sans',sans-serif",animation:"fadeUp .5s ease .2s both"}}>Il corso finisce. La sperimentazione no.</p>
     <div style={{width:80,height:4,borderRadius:2,background:C.orange,margin:"8px 0",animation:"fadeUp .5s ease .3s both"}}/>
     <p style={{fontSize:20,color:C.orange,fontWeight:700,fontFamily:"'DM Sans',sans-serif",animation:"fadeUp .5s ease .4s both"}}>ISI Piaggia · Viareggio</p>
+    <p style={{fontSize:16,fontWeight:600,color:C.navy,opacity:.6,fontFamily:"'DM Sans',sans-serif",animation:"fadeUp .5s ease .5s both"}}>prof. Holger Ferrero</p>
   </div>;
 }
 
@@ -664,7 +705,7 @@ export default function PlenariaPiaggia() {
 
       {/* Header */}
       <div style={{position:"absolute",top:12,left:24,right:24,display:"flex",justifyContent:"space-between",alignItems:"center",zIndex:50,opacity:.6}}>
-        <span style={{fontSize:13,fontWeight:600,color:C.navy}}>ISI Piaggia · Plenaria Avanzato</span>
+        <span style={{fontSize:10,fontWeight:600,color:C.navy}}>ISI Piaggia · Corso IA Avanzato · Sessione conclusiva · prof. Holger Ferrero</span>
         <div style={{display:"flex",alignItems:"center",gap:10}}>
           {demoMode && <span style={{background:C.orange,color:"white",padding:"2px 10px",borderRadius:12,fontSize:11,fontWeight:700}}>DEMO</span>}
           <span style={{fontSize:12,color:C.navy}}>{current+1}/{SLIDES.length}</span>
