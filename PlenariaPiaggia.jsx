@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 
 // ============================================================
 // PLENARIA DI RESTITUZIONE — Corso IA Avanzato
-// IIS Carlo Piaggia · Viareggio · 2 ore
+// ISI Piaggia · Viareggio · 2 ore
 // ============================================================
 // SETUP FORM (crea 7 Google Form, uno per domanda):
 //   D1 — Risposta breve    → wordcloud (una parola sull'esperienza)
@@ -408,14 +408,45 @@ const SLIDES = [
     { t: "Studenti protagonisti", d: "Insegnare l'uso critico dell'IA in classe — non il divieto, ma il metodo" },
   ]},
 
-  { type: "content", icon: "📅", title: "Una cosa da fare\nentro lunedì", bullets: [
-    "🟢  Livello base — 5 minuti",
-    "   Incolla il tuo Documento di Contesto nelle Custom Instructions del tuo strumento",
-    "🟡  Livello medio — 15 minuti",
-    "   Mostra a un collega la cosa più utile che hai scoperto durante il corso",
-    "🔴  Livello avanzato — 30 minuti",
-    "   Usa Cowork o Claude per automatizzare un compito ricorrente della prossima settimana",
-  ], footnote: "Non serve fare tutto. Basta fare una cosa." },
+  // ── SCENARIO GLOBALE ─────────────────────────────────────
+  { type: "section", icon: "🌍", title: "Lo scenario globale",
+    subtitle: "Dove siamo arrivati e dove sta andando l'IA" },
+
+  { type: "videos", icon: "🎬",
+    title: "Un anno di salto quantico",
+    subtitle: "Stessa celebrazione, IA completamente diversa",
+    videos: [
+      { year: "2025", label: "Capodanno Cinese 2025", url: "https://youtu.be/Fw_dSNxhhY4?si=fP0ZdabsiGJ93EJN" },
+      { year: "2026", label: "Capodanno Cinese 2026", url: "https://youtu.be/mUmlv814aJo?si=rIZchOtiypfQyK-p" },
+    ]},
+
+  { type: "ideas", icon: "📊", area: "Stanford AI Index 2026 — I numeri", color: C.orange, ideas: [
+    { t: "Coding: 60% → 100% in un anno", d: "Su un benchmark chiave di programmazione, le prestazioni hanno quasi raddoppiato in 12 mesi" },
+    { t: "Agenti AI: 12% → 66%", d: "Di successo su task reali. In un anno. Falliscono ancora 1 su 3 — ma la direzione è chiara" },
+    { t: "GenAI: adozione più rapida della storia", d: "53% globale in tre anni — più veloce di PC e internet. Valore mediano per utente triplicato nel 2026" },
+    { t: "Investimenti USA: 285,9 mld$ (23x Cina)", d: "Ma i ricercatori AI verso gli USA sono calati dell'89% dal 2017. Denaro c'è, talenti no" },
+  ]},
+
+  { type: "ideas", icon: "🧭", area: "Stanford AI Index 2026 — Il quadro", color: C.purple, ideas: [
+    { t: "La jagged frontier", d: "Medaglia d'oro alle Olimpiadi di matematica. Ma legge un orologio analogico solo il 50% delle volte. Geniale e stupida allo stesso tempo" },
+    { t: "Gap USA-Cina: solo 2,7 punti", d: "I due paesi si sono alternati in testa. La concentrazione tecnologica è globale, non più unipolare" },
+    { t: "Infrastruttura fragile", d: "5.427 data center USA (10x qualsiasi altro paese). Quasi tutti i chip AI avanzati: una sola fonderia, TSMC, in Taiwan" },
+    { t: "50 punti di scarto", d: "73% degli esperti prevede impatto positivo sull'AI. Solo il 23% del pubblico concorda. Due pianeti diversi" },
+  ]},
+
+  { type: "ideas", icon: "🏫", area: "AI e Scuola — Il paradosso (Stanford 2026)", color: C.coral, ideas: [
+    { t: "80% degli studenti usa AI ogni giorno", d: "Era il 40% nel 2023. A livello K-12 tra il 50% e l'84%. L'AI è già dentro le classi, con o senza permesso" },
+    { t: "Solo il 6% trova le policy chiare", d: "La metà delle scuole non ha ancora una policy AI. Le istituzioni reagiscono più lentamente della pratica reale" },
+    { t: "CS cala, AI cresce", d: "Iscrizioni a informatica -11%. Master in AI +17%. Non è un declino STEM: è una riallocazione verso l'AI" },
+    { t: "L'AI entra in tre tempi", d: "Prima come strumento → poi come oggetto di studio → solo dopo come disciplina. Un ordine anomalo rispetto a tutte le rivoluzioni precedenti" },
+  ]},
+
+  { type: "ideas", icon: "🚀", area: "AI e Scuola — Le opportunità (per noi)", color: C.teal, ideas: [
+    { t: "Formazione docenti: gap enorme", d: "Nessuno standard nazionale, qualità dipende dalle risorse locali. Lo spazio per chi forma i docenti è immenso — e urgente" },
+    { t: "Tre livelli da tenere distinti", d: "AI in education (usare strumenti) ≠ AI literacy (capire come funziona) ≠ AI education (costruire sistemi). Confonderli è il rischio principale" },
+    { t: "L'apprendimento si disintermedia", d: "Skill AI crescono più velocemente fuori dalla scuola (corsi, certificati, lavoro). La scuola può scegliere di guidare o seguire" },
+    { t: "Equità come priorità progettuale", d: "Gap persistente per genere, etnia, reddito. Chi forma i docenti può amplificare o ridurre queste disuguaglianze sistemiche" },
+  ]},
 
   { type: "bigtext", icon: "✨",
     text: "Non serve essere esperti.\nServe essere curiosi.",
@@ -429,7 +460,7 @@ const SLIDES = [
 // ============================================================
 function CoverSlide() {
   return <div style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",height:"100%",textAlign:"center",gap:12}}>
-    <div style={{fontSize:15,fontWeight:600,color:C.orange,letterSpacing:".15em",textTransform:"uppercase",fontFamily:"'DM Sans',sans-serif",animation:"fadeUp .6s ease .1s both"}}>IIS Carlo Piaggia · Viareggio</div>
+    <div style={{fontSize:15,fontWeight:600,color:C.orange,letterSpacing:".15em",textTransform:"uppercase",fontFamily:"'DM Sans',sans-serif",animation:"fadeUp .6s ease .1s both"}}>ISI Piaggia · Viareggio</div>
     <h1 style={{fontSize:50,fontWeight:900,color:C.navy,fontFamily:"'Playfair Display',Georgia,serif",lineHeight:1.1,maxWidth:740,margin:"8px 0",letterSpacing:"-.02em",animation:"fadeUp .6s ease .2s both"}}>Plenaria di Restituzione<br/>Corso IA Avanzato</h1>
     <div style={{width:80,height:4,borderRadius:2,background:C.orange,margin:"8px 0",animation:"fadeUp .6s ease .3s both"}}/>
     <p style={{fontSize:19,color:C.navy,opacity:.5,fontFamily:"'DM Sans',sans-serif",animation:"fadeUp .6s ease .4s both"}}>Condivisione · Bilancio · Prossimi passi · 2 ore</p>
@@ -527,13 +558,32 @@ function IdeasSlide({ slide }) {
   </div>;
 }
 
+function VideosSlide({ slide }) {
+  return <div style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",height:"100%",padding:"0 44px",textAlign:"center"}}>
+    <div style={{fontSize:44,marginBottom:8,animation:"fadeUp .4s ease both"}}>{slide.icon}</div>
+    <h2 style={{fontSize:38,fontWeight:900,color:C.navy,fontFamily:"'Playfair Display',Georgia,serif",lineHeight:1.15,marginBottom:6,letterSpacing:"-.02em",animation:"fadeUp .5s ease .1s both"}}>{slide.title}</h2>
+    <p style={{fontSize:17,color:C.navy,opacity:.5,fontFamily:"'DM Sans',sans-serif",marginBottom:28,animation:"fadeUp .4s ease .2s both"}}>{slide.subtitle}</p>
+    <div style={{display:"flex",gap:32,justifyContent:"center"}}>
+      {slide.videos.map((v, i) => (
+        <div key={i} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:14,padding:"24px 28px",background:i===0?`${C.navy}08`:`${C.orange}10`,borderRadius:20,border:`2px solid ${i===0?C.navy+"18":C.orange+"40"}`,animation:`fadeUp .5s ease ${.2+i*.15}s both`}}>
+          <div style={{fontFamily:"'DM Sans',sans-serif",fontSize:13,fontWeight:700,letterSpacing:".12em",textTransform:"uppercase",color:i===0?C.navy:C.orange}}>{v.year}</div>
+          <QRCode url={v.url} size={170} />
+          <p style={{fontSize:15,fontWeight:600,color:C.navy,fontFamily:"'DM Sans',sans-serif",margin:0,maxWidth:200}}>{v.label}</p>
+          <p style={{fontSize:11,color:C.navy,opacity:.35,fontFamily:"'DM Sans',sans-serif",margin:0,wordBreak:"break-all",maxWidth:200}}>{v.url.replace("https://","")}</p>
+        </div>
+      ))}
+    </div>
+    <p style={{fontSize:13,color:C.navy,opacity:.3,marginTop:20,fontFamily:"'DM Sans',sans-serif",animation:"fadeUp .4s ease .6s both"}}>Scansiona o apri l'URL · confrontate la differenza in un anno</p>
+  </div>;
+}
+
 function ClosingSlide() {
   return <div style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",height:"100%",textAlign:"center",gap:14}}>
     <div style={{fontSize:62,animation:"fadeUp .5s ease both"}}>🙏</div>
     <h2 style={{fontSize:48,fontWeight:900,color:C.navy,fontFamily:"'Playfair Display',Georgia,serif",lineHeight:1.15,letterSpacing:"-.02em",animation:"fadeUp .6s ease .1s both"}}>Grazie.</h2>
     <p style={{fontSize:22,color:C.navy,opacity:.5,fontFamily:"'DM Sans',sans-serif",animation:"fadeUp .5s ease .2s both"}}>Il corso finisce. La sperimentazione no.</p>
     <div style={{width:80,height:4,borderRadius:2,background:C.orange,margin:"8px 0",animation:"fadeUp .5s ease .3s both"}}/>
-    <p style={{fontSize:20,color:C.orange,fontWeight:700,fontFamily:"'DM Sans',sans-serif",animation:"fadeUp .5s ease .4s both"}}>IIS Carlo Piaggia · Viareggio</p>
+    <p style={{fontSize:20,color:C.orange,fontWeight:700,fontFamily:"'DM Sans',sans-serif",animation:"fadeUp .5s ease .4s both"}}>ISI Piaggia · Viareggio</p>
   </div>;
 }
 
@@ -580,6 +630,7 @@ export default function PlenariaPiaggia() {
       case "discussion": return <DiscussionSlide slide={slide} />;
       case "poll":       return <PollSlide slide={slide} pollData={pollData} />;
       case "ideas":      return <IdeasSlide slide={slide} />;
+      case "videos":     return <VideosSlide slide={slide} />;
       case "closing":    return <ClosingSlide />;
       default: return null;
     }
@@ -613,7 +664,7 @@ export default function PlenariaPiaggia() {
 
       {/* Header */}
       <div style={{position:"absolute",top:12,left:24,right:24,display:"flex",justifyContent:"space-between",alignItems:"center",zIndex:50,opacity:.6}}>
-        <span style={{fontSize:13,fontWeight:600,color:C.navy}}>IIS Carlo Piaggia · Plenaria Avanzato</span>
+        <span style={{fontSize:13,fontWeight:600,color:C.navy}}>ISI Piaggia · Plenaria Avanzato</span>
         <div style={{display:"flex",alignItems:"center",gap:10}}>
           {demoMode && <span style={{background:C.orange,color:"white",padding:"2px 10px",borderRadius:12,fontSize:11,fontWeight:700}}>DEMO</span>}
           <span style={{fontSize:12,color:C.navy}}>{current+1}/{SLIDES.length}</span>
